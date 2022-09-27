@@ -1,0 +1,24 @@
+{
+  "name": "ts-api",
+  "version": "1.0.0",
+  "description": "Serverless Cloud TypeScript API template",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "cloud",
+    "test": "cloud test"
+  },
+  "devDependencies": {
+    "@serverless/cloud": "^2.10.13",
+    "@types/jest": "^26.0.24"
+  },
+  "serverless": {
+    "app": "pb-bot",
+    "org": "dnhess20"
+  },
+  "dependencies": {
+    "@discordjs/rest": "^1.1.0",
+    "discord-api-types": "^0.37.10",
+    "discord-interactions": "^3.2.0"
+  }
+}
