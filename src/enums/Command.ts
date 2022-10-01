@@ -4,5 +4,5 @@ export enum Command {
     WHOAMI = 'whoami',
     LEADERBOARD = 'leaderboard',
     WEBSITE = 'website',
-    COLLECTIBLES = 'collectibles',
+    COLLECTIBLE = 'collectible',
 }

@@ -1,10 +1,11 @@
-import { api, params } from '@serverless/cloud'
+import { api, params, schedule, data } from '@serverless/cloud'
 import { InteractionType, verifyKeyMiddleware } from 'discord-interactions'
 import { REST } from '@discordjs/rest'
 import { Routes } from 'discord-api-types/v9'
 import { commands } from './src/commands'
 import DiscordInteraction from './src/classes/DiscordInteraction'
 import { HttpStatusCode } from './src/enums/HttpStatusCodes'
+import { convertCollectiblesResponseToCollectiblesData } from './src/interfaces/ICollectibles'
 
 const rest = new REST({ version: '9' }).setToken(params.DISCORD_BOT_TOKEN)
 
@@ -54,6 +55,19 @@ api.post('/discord', api.rawBody, verifyKeyMiddleware(params.DISCORD_PUBLIC_KEY)
         const interactionResponse = await command.interact(interaction)
         return res.send(interactionResponse)
     }
+    case InteractionType.APPLICATION_COMMAND_AUTOCOMPLETE: {
+        const { name } = data
+        if (!commands.has(name)) {
+            return res.status(HttpStatusCode.NOT_FOUND).send({
+                code: HttpStatusCode.NOT_FOUND,
+                message: `Command "${name}" not found.`,
+                timestamp: Date.now(),
+                });
+        }
+        const { autocomplete } = commands.get(name)
+        const interactionResponse = await autocomplete(interaction)
+        return res.send(interactionResponse)
+    }
     default: {
         console.error(`Interaction type ${type} not supported.`)
         return res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send({
@@ -63,4 +77,41 @@ api.post('/discord', api.rawBody, verifyKeyMiddleware(params.DISCORD_PUBLIC_KEY)
         });
     }
 }
+})
+
+// Cron job to fetch collectibles from the API and update the database
+schedule.every('12 hours', async () => {
+    console.log('Updating collectibles...')
+    const collectibles = await fetch(`${params.BASE_API_URL}/prizes`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const collectiblesJson= await collectibles.json();
+
+    const collectiblesData = convertCollectiblesResponseToCollectiblesData(collectiblesJson);
+
+    // Set the collectibles in the database
+    console.log('setting collectibles in database...')
+    
+    const perChunk = 25 // items per chunk
+
+    const result = collectiblesData.reduce((resultArray, item, index) => {
+        const chunkIndex = Math.floor(index/perChunk)
+        
+        if(!resultArray[chunkIndex]) {
+            resultArray[chunkIndex] = [] // start a new chunk
+        }
+
+        resultArray[chunkIndex].push({key: `collectibles:${item.name}`, value: item})
+
+        return resultArray
+    }, [])
+
+    for (const chunk of result) {
+        await data.set(chunk, { overwrite: true })
+    }
+
+    console.log('Collectibles updated!')
 })
