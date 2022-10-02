@@ -13,7 +13,8 @@ import * as auction from './auction';
 import * as help from './help';
 import * as game from './game';
 
-const commands: Map<Command, ICommandModule> = new Map([
+// eslint-disable-next-line import/prefer-default-export
+export const commands: Map<Command, ICommandModule> = new Map([
   [Command.PING, ping],
   [Command.WHOAMI, whoami],
   [Command.LEADERBOARD, leaderboard],
@@ -26,4 +27,3 @@ const commands: Map<Command, ICommandModule> = new Map([
   [Command.HELP, help],
   [Command.GAME, game],
 ]);
-export default commands;

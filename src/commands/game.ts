@@ -5,7 +5,7 @@ import { InteractionResponseType } from 'discord-interactions';
 import { data, params } from '@serverless/cloud';
 import DiscordInteraction from '../classes/DiscordInteraction';
 import { ICommand } from '../interfaces/ICommand';
-import { CommandOptionType } from '../enums/ICommandOptionType';
+import CommandOptionType from '../enums/ICommandOptionType';
 import capitalizeFirstLetter from '../utils/capitalizeFirstLetter';
 import { IGameData } from '../interfaces/IGame';
 
