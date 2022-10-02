@@ -18,7 +18,7 @@ api.get('/set-commands', async (req, res) => {
         discordCommands.push(value.command)
     })
   try {
-    await rest.put(Routes.applicationGuildCommands(params.DISCORD_CLIENT_ID, params.GUILD_ID), {
+    await rest.put(Routes.applicationCommands(params.DISCORD_CLIENT_ID), {
       body: discordCommands
     })
     return res.sendStatus(200)
