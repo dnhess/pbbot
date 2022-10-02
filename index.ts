@@ -45,6 +45,7 @@ api.get('/set-commands', async (_req, res) => {
 api.post('/discord', api.rawBody, verifyKeyMiddleware(params.DISCORD_PUBLIC_KEY), async (req, res) => {
   const { body } = req;
   const interaction = new DiscordInteraction(body.id, body.type, body.data, body.member);
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   const { type, data } = interaction;
   const commandName = body.data.name ?? undefined;
   if (!commandName) {
@@ -115,6 +116,7 @@ schedule.every('12 hours', async () => {
     const chunkIndex = Math.floor(index / perChunk);
 
     if (!resultArray[chunkIndex]) {
+      // eslint-disable-next-line no-param-reassign
       resultArray[chunkIndex] = []; // start a new chunk
     }
 
@@ -123,7 +125,9 @@ schedule.every('12 hours', async () => {
     return resultArray;
   }, []);
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const chunk of result) {
+    // eslint-disable-next-line no-await-in-loop
     await data.set(chunk, { overwrite: true });
   }
 
@@ -154,6 +158,7 @@ schedule.every('12 hours', async () => {
     const chunkIndex = Math.floor(index / perChunk);
 
     if (!resultArray[chunkIndex]) {
+      // eslint-disable-next-line no-param-reassign
       resultArray[chunkIndex] = []; // start a new chunk
     }
 
@@ -162,7 +167,9 @@ schedule.every('12 hours', async () => {
     return resultArray;
   }, []);
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const chunk of result) {
+    // eslint-disable-next-line no-await-in-loop
     await data.set(chunk, { overwrite: true });
   }
 
