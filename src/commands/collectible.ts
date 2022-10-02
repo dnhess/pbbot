@@ -6,7 +6,7 @@ import DiscordInteraction from '../classes/DiscordInteraction';
 import { ICommand } from '../interfaces/ICommand';
 import CommandOptionType from '../enums/ICommandOptionType';
 import { ICollectiableResponse } from '../interfaces/ICollectibles';
-import capitalizeFirstLetter from '../utils/capitalizeFirstLetter';
+import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
 
 export const command: ICommand = {
   name: 'collectible',
