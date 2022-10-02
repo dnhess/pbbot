@@ -1,4 +1,4 @@
-import { Command } from '../enums';
+import Command from '../enums/Command';
 import { ICommand } from './ICommand';
 import { IDiscordMemberData } from './IDiscordMemberData';
 
