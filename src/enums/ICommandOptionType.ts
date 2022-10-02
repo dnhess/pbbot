@@ -1,4 +1,4 @@
-export enum CommandOptionType {
+enum CommandOptionType {
     SUB_COMMAND = 1,
     SUB_COMMAND_GROUP = 2,
     STRING = 3,
@@ -11,3 +11,5 @@ export enum CommandOptionType {
     NUMBER = 10,
     ATTACHMENT = 11,
   }
+
+export default CommandOptionType;

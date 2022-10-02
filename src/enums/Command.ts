@@ -1,5 +1,5 @@
 // Add to enum when creating a new command
-export enum Command {
+enum Command {
     PING = 'ping',
     WHOAMI = 'whoami',
     LEADERBOARD = 'leaderboard',
@@ -12,3 +12,4 @@ export enum Command {
     HELP = 'help',
     GAME = 'game'
 }
+export default Command;
