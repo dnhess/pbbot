@@ -10,6 +10,7 @@ import * as drops from './drops';
 import * as nextdrop from './nextdrop';
 import * as auction from './auction';
 import * as help from './help';
+import * as game from './game';
 
 export const commands: Map<Command, ICommandModule> = new Map([
     [Command.PING, ping],
@@ -21,5 +22,6 @@ export const commands: Map<Command, ICommandModule> = new Map([
     [Command.DROPS, drops],
     [Command.NEXTDROP, nextdrop],
     [Command.AUCTION, auction],
-    [Command.HELP, help]
+    [Command.HELP, help],
+    [Command.GAME, game]
 ]);

@@ -6,7 +6,7 @@ import { commands } from './src/commands'
 import DiscordInteraction from './src/classes/DiscordInteraction'
 import { HttpStatusCode } from './src/enums/HttpStatusCodes'
 import { convertCollectiblesResponseToCollectiblesData } from './src/interfaces/ICollectibles'
-import { convertAuctionsResponseToAuctionData } from './src/interfaces/IAuctions'
+import { convertGameResponseToGameData } from './src/interfaces/IGame'
 
 const rest = new REST({ version: '9' }).setToken(params.DISCORD_BOT_TOKEN)
 
@@ -115,4 +115,43 @@ schedule.every('12 hours', async () => {
     }
 
     console.log('Collectibles updated!')
+})
+
+// Cron job to fetch all games from the API and update the database
+// The URL is https://playbiteapi.azurewebsites.net/api/feed?plat=web 
+// we are looking for the object with a title of "All"
+schedule.every('12 hours', async () => {
+    console.log('Updating games...')
+    const games = await fetch(`${params.BASE_API_URL}/feed?plat=web`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const gamesJson= await games.json();
+
+    const gamesData = convertGameResponseToGameData(gamesJson.filter((game) => game.title === 'All')[0]);
+
+    // Set the games in the database
+    console.log('setting games in database...')
+    
+    const perChunk = 25 // items per chunk
+
+    const result = gamesData.reduce((resultArray, item, index) => {
+        const chunkIndex = Math.floor(index/perChunk)
+        
+        if(!resultArray[chunkIndex]) {
+            resultArray[chunkIndex] = [] // start a new chunk
+        }
+
+        resultArray[chunkIndex].push({key: `games:${item.id}`, value: item})
+
+        return resultArray
+    }, [])
+
+    for (const chunk of result) {
+        await data.set(chunk, { overwrite: true })
+    }
+
+    console.log('Games updated!')
 })

@@ -9,5 +9,6 @@ export enum Command {
     DROPS = 'drops',
     NEXTDROP = 'nextdrop',
     AUCTION = 'auction',
-    HELP = 'help'
+    HELP = 'help',
+    GAME = 'game'
 }
