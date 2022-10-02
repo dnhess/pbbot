@@ -1,4 +1,5 @@
 import { IUser } from './IUser';
+
 interface ICurrentBid {
     id?: string;
     amount: number;
@@ -40,17 +41,13 @@ export interface IAuctionData {
 }
 
 // Convert IAuctionsResponse to IAuctionData
-export const convertAuctionsResponseToAuctionData = (auctionsResponse: IAuctionsResponse[]): IAuctionData[] => {
-    return auctionsResponse.map(auction => {
-        return {
-            startDate: auction.startDate,
-            endDate: auction.endDate,
-            bidderCount: auction.bidderCount,
-            prizeName: auction.prize.name,
-            prizeImageUrl: auction.prize.promoImageUrl,
-            prizeDescription: auction.prize.description,
-            currentBidder: auction.currentBid?.user?.displayName || 'No bids yet',
-            currentBidAmount: auction.currentBid?.amount
-        }
-    })
-}
+export const convertAuctionsResponseToAuctionData = (auctionsResponse: IAuctionsResponse[]): IAuctionData[] => auctionsResponse.map((auction) => ({
+  startDate: auction.startDate,
+  endDate: auction.endDate,
+  bidderCount: auction.bidderCount,
+  prizeName: auction.prize.name,
+  prizeImageUrl: auction.prize.promoImageUrl,
+  prizeDescription: auction.prize.description,
+  currentBidder: auction.currentBid?.user?.displayName || 'No bids yet',
+  currentBidAmount: auction.currentBid?.amount,
+}));

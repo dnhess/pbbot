@@ -1,11 +1,3 @@
-interface IGameResponse {
-    title: string;
-    type: string;
-    payload: {
-        games: IGameData[];
-    }
-}
-
 export interface IGameData {
     id: string;
     name: string;
@@ -14,15 +6,17 @@ export interface IGameData {
     posterImageUrl?: string;
     pointMultiplier?: number;
 }
-
-export const convertGameResponseToGameData = (game: IGameResponse): IGameData[] => {
-    console.log(game);
-    return game.payload.games.map(game => {
-        return {
-            id: game.id,
-            name: game.name,
-            description: game.description,
-            promoImageUrl: game.promoImageUrl || game.posterImageUrl
-        }
-    })
+interface IGameResponse {
+    title: string;
+    type: string;
+    payload: {
+        games: IGameData[];
+    }
 }
+
+export const convertGameResponseToGameData = (game: IGameResponse): IGameData[] => game.payload.games.map((item) => ({
+  id: item.id,
+  name: item.name,
+  description: item.description,
+  promoImageUrl: item.promoImageUrl || item.posterImageUrl,
+}));
