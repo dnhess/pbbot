@@ -22,14 +22,22 @@ api.get('/set-commands', async (_req, res) => {
     discordCommands.push(value.command);
   });
   try {
+    // If running locally, use applicationGuildId to register commands to a specific guild
+    if (params.DISCORD_ENVIRONMENT === 'local') {
+      await rest.put(
+        Routes.applicationGuildCommands(params.DISCORD_CLIENT_ID, params.GUILD_ID),
+        { body: discordCommands },
+      );
+      return res.status(HttpStatusCode.OK).send('Successfully registered application commands for local develop.');
+    }
+
     await rest.put(Routes.applicationCommands(params.DISCORD_CLIENT_ID), {
       body: discordCommands,
     });
-    return res.sendStatus(200);
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(e);
-    return res.sendStatus(500);
+    return res.status(HttpStatusCode.OK).send('Successfully registered application commands for production.');
+  } catch (error) {
+    console.error(error);
+    return res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send('Error registering application commands.');
   }
 });
 
