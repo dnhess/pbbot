@@ -19,6 +19,7 @@
   "dependencies": {
     "@discordjs/rest": "^1.1.0",
     "discord-api-types": "^0.37.10",
-    "discord-interactions": "^3.2.0"
+    "discord-interactions": "^3.2.0",
+    "luxon": "^3.0.4"
   }
 }

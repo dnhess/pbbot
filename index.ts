@@ -6,6 +6,7 @@ import { commands } from './src/commands'
 import DiscordInteraction from './src/classes/DiscordInteraction'
 import { HttpStatusCode } from './src/enums/HttpStatusCodes'
 import { convertCollectiblesResponseToCollectiblesData } from './src/interfaces/ICollectibles'
+import { convertAuctionsResponseToAuctionData } from './src/interfaces/IAuctions'
 
 const rest = new REST({ version: '9' }).setToken(params.DISCORD_BOT_TOKEN)
 

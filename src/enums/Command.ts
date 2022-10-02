@@ -5,4 +5,9 @@ export enum Command {
     LEADERBOARD = 'leaderboard',
     WEBSITE = 'website',
     COLLECTIBLE = 'collectible',
+    DOWNLOAD = 'download',
+    DROPS = 'drops',
+    NEXTDROP = 'nextdrop',
+    AUCTION = 'auction',
+    HELP = 'help'
 }

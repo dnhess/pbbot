@@ -3,21 +3,20 @@ import DiscordInteraction from "../classes/DiscordInteraction";
 import { ICommand } from "../interfaces/ICommand";
 
 export const command: ICommand = {
-    name: "website",
-    description: "The website for playbite!",
+    name: "drops",
+    description: "Times for all drops!",
 };
 
 export const interact = async (interaction: DiscordInteraction, interactionActionOverwrite?: any): Promise<any> => {
+    // Returns an image with the drop image
     return {
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: {
             embeds: [
                 {
-                    title: "Playbite",
-                    description: "Earn awesome rewards by playing games!",
-                    url: "https://www.playbite.com/",
-                    thumbnail: { // Probably need to update this url
-                        url: "https://uploads-ssl.webflow.com/5edd8e1d77a7c53d4e3a6a46/5eddc5d1aa51752e01883ba1_P%20Logo%403x.png"
+                    title: "Playbite Drops",
+                    image: {
+                        url: "https://media.discordapp.net/attachments/876983102830968874/1022663018779263067/unknown.png?width=319&height=904"
                     }
                 }
             ]

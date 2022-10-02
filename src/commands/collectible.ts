@@ -61,8 +61,8 @@ export const interact = async (interaction: DiscordInteraction, interactionActio
                 {
                     title: collectible.name,
                     description: collectible.description,
-                    image: {
-                        url: collectible.promoImageUrl
+                    thumbnail: {
+                        url: encodeURI(collectible.promoImageUrl)
                     },
                     fields: [
                         {
@@ -72,12 +72,12 @@ export const interact = async (interaction: DiscordInteraction, interactionActio
                         },
                         {
                             name: 'Available',
-                            value: collectible.available || 'N/A',
+                            value: collectible.available,
                             inline: true
                         },
                         {
                             name: 'Redeems',
-                            value: collectible.redeems || 'N/A',
+                            value: collectible.redeems,
                             inline: true
                         }
                     ]
