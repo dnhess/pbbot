@@ -19,5 +19,5 @@ export const interact = async (_interaction: DiscordInteraction, _interactionAct
         },
       },
     ],
-},
+  },
 });
