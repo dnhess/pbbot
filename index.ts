@@ -3,8 +3,8 @@
 import {
   api, params, schedule, data,
 } from '@serverless/cloud';
+import { REST } from 'discord.js';
 import { InteractionType, verifyKeyMiddleware } from 'discord-interactions';
-import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import { commands } from './src/commands';
 import DiscordInteraction from './src/classes/DiscordInteraction';
@@ -162,7 +162,7 @@ schedule.every('12 hours', async () => {
       resultArray[chunkIndex] = []; // start a new chunk
     }
 
-    resultArray[chunkIndex].push({ key: `games:${item.id}`, value: item });
+    resultArray[chunkIndex].push({ key: `games:${item.name}`, value: item });
 
     return resultArray;
   }, []);

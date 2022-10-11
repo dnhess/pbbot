@@ -10,6 +10,7 @@ enum Command {
     NEXTDROP = 'nextdrop',
     AUCTION = 'auction',
     HELP = 'help',
-    GAME = 'game'
+    GAME = 'game',
+    CREATECOLLECTIBLE = 'createcollectible',
 }
 export default Command;
