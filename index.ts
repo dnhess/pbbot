@@ -125,12 +125,13 @@ schedule.every('12 hours', async () => {
     return resultArray;
   }, []);
 
-  // eslint-disable-next-line no-restricted-syntax
-  for (const chunk of result) {
-    // eslint-disable-next-line no-await-in-loop
-    await data.set(chunk, { overwrite: true });
-  }
+  const promises = result.map(async (chunk) => {
+    const collectibleItemChunk = await data.set(chunk, { overwrite: true });
+    return collectibleItemChunk;
+  });
 
+  console.log('Awaiting all promises...');
+  await Promise.all(promises);
   console.log('Collectibles updated!');
 });
 
@@ -167,11 +168,11 @@ schedule.every('12 hours', async () => {
     return resultArray;
   }, []);
 
-  // eslint-disable-next-line no-restricted-syntax
-  for (const chunk of result) {
-    // eslint-disable-next-line no-await-in-loop
-    await data.set(chunk, { overwrite: true });
-  }
-
+  const promises = result.map(async (chunk) => {
+    const gameItemChunk = await data.set(chunk, { overwrite: true });
+    return gameItemChunk;
+  });
+  console.log('Awaiting all promises...');
+  await Promise.all(promises);
   console.log('Games updated!');
 });
