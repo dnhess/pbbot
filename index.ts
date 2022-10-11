@@ -3,8 +3,8 @@
 import {
   api, params, schedule, data,
 } from '@serverless/cloud';
+import { REST } from 'discord.js';
 import { InteractionType, verifyKeyMiddleware } from 'discord-interactions';
-import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import { commands } from './src/commands';
 import DiscordInteraction from './src/classes/DiscordInteraction';
