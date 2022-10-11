@@ -162,7 +162,7 @@ schedule.every('12 hours', async () => {
       resultArray[chunkIndex] = []; // start a new chunk
     }
 
-    resultArray[chunkIndex].push({ key: `games:${item.id}`, value: item });
+    resultArray[chunkIndex].push({ key: `games:${item.name}`, value: item });
 
     return resultArray;
   }, []);
