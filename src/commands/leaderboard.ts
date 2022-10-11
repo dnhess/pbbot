@@ -90,6 +90,7 @@ export const interact = async (interaction: DiscordInteraction, _interactionActi
             // image: leaderboardItem.imageUrl,
             name: `${leaderboardItem.position}. ${leaderboardItem.name}`,
             value: `${new Intl.NumberFormat().format(leaderboardItem.points)} points`,
+            inline: true,
           })),
         },
       ],
