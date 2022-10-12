@@ -12,8 +12,6 @@
 name: "CodeQL"
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ "**" ]
@@ -70,3 +68,29 @@ jobs:
       uses: github/codeql-action/analyze@v2
       with:
         category: "/language:${{matrix.language}}"
+
+  test:
+    name: Run eslint scanning
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: npm ci
+    - name: Run ESLint
+      run: npm run lint
+  
+  deploy:
+    if: github.repository == 'pbbot/main'
+    needs: [test, analyze]
+    name: Deploy
+    runs-on: ubuntu-latest
+    env:
+      SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - run: npm ci
+      - run: npx @serverless/cloud test
+      - run: npx @serverless/cloud deploy prod
