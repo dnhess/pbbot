@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { InteractionResponseType } from 'discord-interactions';
+import { InteractionResponseFlags, InteractionResponseType } from 'discord-interactions';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { data, params } from '@serverless/cloud';
 import DiscordInteraction from '../classes/DiscordInteraction';
@@ -55,18 +55,30 @@ export const autocomplete = async (interaction: DiscordInteraction): Promise<any
 
 export const interact = async (interaction: DiscordInteraction, interactionActionOverwrite?: any): Promise<any> => {
   // Get the game name from the interaction
-  const gameId = interaction.getOptionValue('game') as string;
+  const gameName = interaction.getOptionValue('game') as string;
   // Get the game from the database
-  const game = await data.get(`games:${gameId}`) as IGameData;
+  const game = await data.get(`games:${gameName}`) as IGameData;
+
+  // If the game doesn't exist, return an error
+  if (!game) {
+    console.error(`Game "${gameName}" not found.`);
+    return {
+      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+      data: {
+        content: `Game "${gameName}" not found.`,
+        flags: InteractionResponseFlags.EPHEMERAL,
+      },
+    };
+  }
 
   // Make an api call to three different endpoints to get the game rankings
   // Rankings are for all, day, week
   // URL is ${params.BASE_API_URL}/games/{id}6/rankings?type={type}
   // Type is all, day, week
   const rankings = await Promise.all([
-    fetch(`${params.BASE_API_URL}/games/${gameId}/rankings?type=all`),
-    fetch(`${params.BASE_API_URL}/games/${gameId}/rankings?type=day`),
-    fetch(`${params.BASE_API_URL}/games/${gameId}/rankings?type=week`),
+    fetch(`${params.BASE_API_URL}/games/${game.id}/rankings?type=all`),
+    fetch(`${params.BASE_API_URL}/games/${game.id}/rankings?type=day`),
+    fetch(`${params.BASE_API_URL}/games/${game.id}/rankings?type=week`),
   ]);
 
   // Get the json from the rankings
@@ -104,12 +116,12 @@ export const interact = async (interaction: DiscordInteraction, interactionActio
               value: top10AllString.join(''),
             },
             {
-              name: 'Day Rankings',
-              value: top10DayString.join(''),
+              name: 'Weekly Rankings',
+              value: top10WeekString.join(''),
             },
             {
-              name: 'Week Rankings',
-              value: top10WeekString.join(''),
+              name: 'Daily Rankings',
+              value: top10DayString.join(''),
             },
           ],
         },
