@@ -13,6 +13,7 @@ import * as auction from './auction';
 import * as help from './help';
 import * as game from './game';
 import * as createcollectible from './createcollectible';
+import * as play from './play';
 
 // eslint-disable-next-line import/prefer-default-export
 export const commands: Map<Command, ICommandModule> = new Map([
@@ -28,4 +29,5 @@ export const commands: Map<Command, ICommandModule> = new Map([
   [Command.HELP, help],
   [Command.GAME, game],
   [Command.CREATECOLLECTIBLE, createcollectible],
+  [Command.PLAY, play],
 ]);
