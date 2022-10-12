@@ -71,7 +71,7 @@ jobs:
       with:
         category: "/language:${{matrix.language}}"
 
-  test:
+  eslint:
     name: Run eslint scanning
     runs-on: ubuntu-latest
     steps:
@@ -80,11 +80,9 @@ jobs:
       run: npm ci
     - name: Run ESLint
       run: npm run lint
-  
-  deploy:
-    if: github.repository == 'pbbot/main'
-    needs: [test, analyze]
-    name: Deploy
+
+  test:
+    name: Test
     runs-on: ubuntu-latest
     env:
       SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
@@ -95,4 +93,20 @@ jobs:
           node-version: 16
       - run: npm ci
       - run: npx @serverless/cloud test
+
+  
+  deploy:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: [eslint, analyze, test]
+    name: Deploy
+    runs-on: ubuntu-latest
+    env:
+      SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - run: echo "Deploying to production server on branch $GITHUB_REF"
+      - run: npm ci
       - run: npx @serverless/cloud deploy prod
