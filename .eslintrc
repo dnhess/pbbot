@@ -19,13 +19,13 @@
         "project": "./tsconfig.json"
       },
       "rules": {
-        // "prettier/prettier": [
-        //   "error",
-        //   {
-        //     "singleQuote": true,
-        //     "endOfLine": "auto"
-        //   }
-        // ],
+        "prettier/prettier": [
+          "error",
+          {
+            "singleQuote": true,
+            "endOfLine": "auto"
+          }
+        ],
         "react/jsx-filename-extension": "off",
         "@typescript-eslint/comma-dangle": "off", // Avoid conflict rule between Eslint and Prettier
         "@typescript-eslint/consistent-type-imports": "error", // Ensure `import type` is used when it's necessary
