@@ -2,16 +2,16 @@
 import {
   InteractionResponseFlags,
   InteractionResponseType,
-} from "discord-interactions";
+} from 'discord-interactions';
 
-import type DiscordInteraction from "../classes/DiscordInteraction";
-import type { ICommand } from "../interfaces/ICommand";
+import type DiscordInteraction from '../classes/DiscordInteraction';
+import type { ICommand } from '../interfaces/ICommand';
 // eslint-disable-next-line import/no-cycle
-import { commands } from "./index";
+import { commands } from './index';
 
 export const command: ICommand = {
-  name: "help",
-  description: "Get help with Playbite commands!",
+  name: 'help',
+  description: 'Get help with Playbite commands!',
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,8 +33,8 @@ export const interact = async (
     data: {
       embeds: [
         {
-          title: "Playbite - Help",
-          description: "Here is a list of all available commands!",
+          title: 'Playbite - Help',
+          description: 'Here is a list of all available commands!',
           fields: commandsArray,
         },
       ],

@@ -1,11 +1,11 @@
-import { InteractionResponseType } from "discord-interactions";
+import { InteractionResponseType } from 'discord-interactions';
 
-import type DiscordInteraction from "../classes/DiscordInteraction";
-import type { ICommand } from "../interfaces/ICommand";
+import type DiscordInteraction from '../classes/DiscordInteraction';
+import type { ICommand } from '../interfaces/ICommand';
 
 export const command: ICommand = {
-  name: "whoami",
-  description: "Get your user name",
+  name: 'whoami',
+  description: 'Get your user name',
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

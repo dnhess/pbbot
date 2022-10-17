@@ -1,4 +1,4 @@
-import type { IUser } from "./IUser";
+import type { IUser } from './IUser';
 
 interface ICurrentBid {
   id?: string;
@@ -51,6 +51,6 @@ export const convertAuctionsResponseToAuctionData = (
     prizeName: auction.prize.name,
     prizeImageUrl: auction.prize.promoImageUrl,
     prizeDescription: auction.prize.description,
-    currentBidder: auction.currentBid?.user?.displayName || "No bids yet",
+    currentBidder: auction.currentBid?.user?.displayName || 'No bids yet',
     currentBidAmount: auction.currentBid?.amount,
   }));

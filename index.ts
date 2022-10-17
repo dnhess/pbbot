@@ -1,20 +1,20 @@
 /* eslint-disable no-console */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { api, data, params, schedule } from "@serverless/cloud";
-import { REST } from "discord.js";
-import { Routes } from "discord-api-types/v9";
-import { InteractionType, verifyKeyMiddleware } from "discord-interactions";
+import { api, data, params, schedule } from '@serverless/cloud';
+import { REST } from 'discord.js';
+import { Routes } from 'discord-api-types/v9';
+import { InteractionType, verifyKeyMiddleware } from 'discord-interactions';
 
-import DiscordInteraction from "./src/classes/DiscordInteraction";
-import { commands } from "./src/commands";
-import { HttpStatusCode } from "./src/enums/HttpStatusCodes";
-import { convertCollectiblesResponseToCollectiblesData } from "./src/interfaces/ICollectibles";
-import { convertGameResponseToGameData } from "./src/interfaces/IGame";
+import DiscordInteraction from './src/classes/DiscordInteraction';
+import { commands } from './src/commands';
+import { HttpStatusCode } from './src/enums/HttpStatusCodes';
+import { convertCollectiblesResponseToCollectiblesData } from './src/interfaces/ICollectibles';
+import { convertGameResponseToGameData } from './src/interfaces/IGame';
 
-const rest = new REST({ version: "9" }).setToken(params.DISCORD_BOT_TOKEN);
+const rest = new REST({ version: '9' }).setToken(params.DISCORD_BOT_TOKEN);
 
 // Run this everytime commands are added to register them with Discord
-api.get("/set-commands", async (_req, res) => {
+api.get('/set-commands', async (_req, res) => {
   // Return each interaction module's commands
   const discordCommands = [];
   commands.forEach((value) => {
@@ -22,7 +22,7 @@ api.get("/set-commands", async (_req, res) => {
   });
   try {
     // If running locally, use applicationGuildId to register commands to a specific guild
-    if (params.DISCORD_ENVIRONMENT === "local") {
+    if (params.DISCORD_ENVIRONMENT === 'local') {
       await rest.put(
         Routes.applicationGuildCommands(
           params.DISCORD_CLIENT_ID,
@@ -33,7 +33,7 @@ api.get("/set-commands", async (_req, res) => {
       return res
         .status(HttpStatusCode.OK)
         .send(
-          "Successfully registered application commands for local develop."
+          'Successfully registered application commands for local develop.'
         );
     }
 
@@ -42,18 +42,18 @@ api.get("/set-commands", async (_req, res) => {
     });
     return res
       .status(HttpStatusCode.OK)
-      .send("Successfully registered application commands for production.");
+      .send('Successfully registered application commands for production.');
   } catch (error) {
     console.error(error);
     return res
       .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
-      .send("Error registering application commands.");
+      .send('Error registering application commands.');
   }
 });
 
 // This is the main handler for all interactions
 api.post(
-  "/discord",
+  '/discord',
   api.rawBody,
   verifyKeyMiddleware(params.DISCORD_PUBLIC_KEY),
   async (req, res) => {
@@ -106,7 +106,7 @@ api.post(
         console.error(`Interaction type ${type} not supported.`);
         return res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send({
           code: HttpStatusCode.INTERNAL_SERVER_ERROR,
-          message: "Unhandled Discord interaction",
+          message: 'Unhandled Discord interaction',
           timestamp: Date.now(),
         });
       }
@@ -115,12 +115,12 @@ api.post(
 );
 
 // Cron job to fetch collectibles from the API and update the database
-schedule.every("12 hours", async () => {
-  console.log("Updating collectibles...");
+schedule.every('12 hours', async () => {
+  console.log('Updating collectibles...');
   const collectibles = await fetch(`${params.BASE_API_URL}/prizes`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
   const collectiblesJson = await collectibles.json();
@@ -129,7 +129,7 @@ schedule.every("12 hours", async () => {
     convertCollectiblesResponseToCollectiblesData(collectiblesJson);
 
   // Set the collectibles in the database
-  console.log("setting collectibles in database...");
+  console.log('setting collectibles in database...');
 
   const perChunk = 25; // items per chunk
 
@@ -154,30 +154,30 @@ schedule.every("12 hours", async () => {
     return collectibleItemChunk;
   });
 
-  console.log("Awaiting all promises...");
+  console.log('Awaiting all promises...');
   await Promise.all(promises);
-  console.log("Collectibles updated!");
+  console.log('Collectibles updated!');
 });
 
 // Cron job to fetch all games from the API and update the database
 // The URL is https://playbiteapi.azurewebsites.net/api/feed?plat=web
 // we are looking for the object with a title of "All"
-schedule.every("12 hours", async () => {
-  console.log("Updating games...");
+schedule.every('12 hours', async () => {
+  console.log('Updating games...');
   const games = await fetch(`${params.BASE_API_URL}/feed?plat=web`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
   const gamesJson = await games.json();
 
   const gamesData = convertGameResponseToGameData(
-    gamesJson.filter((game) => game.title === "All")[0]
+    gamesJson.filter((game) => game.title === 'All')[0]
   );
 
   // Set the games in the database
-  console.log("setting games in database...");
+  console.log('setting games in database...');
 
   const perChunk = 25; // items per chunk
 
@@ -198,7 +198,7 @@ schedule.every("12 hours", async () => {
     const gameItemChunk = await data.set(chunk, { overwrite: true });
     return gameItemChunk;
   });
-  console.log("Awaiting all promises...");
+  console.log('Awaiting all promises...');
   await Promise.all(promises);
-  console.log("Games updated!");
+  console.log('Games updated!');
 });

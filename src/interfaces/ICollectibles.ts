@@ -1,4 +1,4 @@
-import ECollectibleCategories from "../enums/ECollectibleCategories";
+import ECollectibleCategories from '../enums/ECollectibleCategories';
 
 export interface ICollectibleCategoryData {
   id: string;

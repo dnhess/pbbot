@@ -1,6 +1,6 @@
-import type Command from "../enums/Command";
-import type { ICommand } from "./ICommand";
-import type { IDiscordMemberData } from "./IDiscordMemberData";
+import type Command from '../enums/Command';
+import type { ICommand } from './ICommand';
+import type { IDiscordMemberData } from './IDiscordMemberData';
 
 export interface IDiscordInteractionData {
   id: string;

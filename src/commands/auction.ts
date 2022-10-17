@@ -1,21 +1,21 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { params } from "@serverless/cloud";
-import { InteractionResponseType } from "discord-interactions";
-import { DateTime } from "luxon";
+import { params } from '@serverless/cloud';
+import { InteractionResponseType } from 'discord-interactions';
+import { DateTime } from 'luxon';
 
-import type DiscordInteraction from "../classes/DiscordInteraction";
-import CommandOptionType from "../enums/ICommandOptionType";
-import { convertAuctionsResponseToAuctionData } from "../interfaces/IAuctions";
-import type { ICommand } from "../interfaces/ICommand";
+import type DiscordInteraction from '../classes/DiscordInteraction';
+import CommandOptionType from '../enums/ICommandOptionType';
+import { convertAuctionsResponseToAuctionData } from '../interfaces/IAuctions';
+import type { ICommand } from '../interfaces/ICommand';
 
 export const command: ICommand = {
-  name: "auction",
-  description: "All current auctions",
+  name: 'auction',
+  description: 'All current auctions',
   type: CommandOptionType.SUB_COMMAND,
   options: [
     {
-      name: "name",
-      description: "The name of the auction",
+      name: 'name',
+      description: 'The name of the auction',
       type: CommandOptionType.STRING,
       required: true,
       autocomplete: true,
@@ -31,9 +31,9 @@ export const autocomplete = async (
   const choices = [];
   if (focused) {
     const auctions = await fetch(`${params.BASE_API_URL}/auctions`, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
     const auctionsJson = await auctions.json();
@@ -62,13 +62,13 @@ export const interact = async (
   _interactionActionOverwrite?: any
 ): Promise<any> => {
   // Get the auction name from the interaction
-  const auctionName = interaction.getOptionValue("name") as string;
+  const auctionName = interaction.getOptionValue('name') as string;
 
   // Get the auction from the database
   const auctions = await fetch(`${params.BASE_API_URL}/auctions`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
   const auctionsJson = await auctions.json();
@@ -84,10 +84,10 @@ export const interact = async (
 
   // Calcuate how long until the auction ends
   const timeUntilEnd = endDate.diff(startDate, [
-    "days",
-    "hours",
-    "minutes",
-    "seconds",
+    'days',
+    'hours',
+    'minutes',
+    'seconds',
   ]);
 
   // Return the auctions as a list that only the user can see
@@ -103,17 +103,17 @@ export const interact = async (
           },
           fields: [
             {
-              name: "Current Bid",
+              name: 'Current Bid',
               value: auction.currentBidAmount,
               inline: true,
             },
             {
-              name: "Current Bidder",
+              name: 'Current Bidder',
               value: auction.currentBidder,
               inline: true,
             },
             {
-              name: "Number of Bids",
+              name: 'Number of Bids',
               value: auction.bidderCount,
               inline: true,
             },

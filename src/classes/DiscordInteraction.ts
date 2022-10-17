@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-constructor */
-import type { IDiscordInteraction } from "../interfaces/IDiscordInteraction";
-import type { IDiscordInteractionData } from "../interfaces/IDiscordInteractionData";
-import type { IDiscordMemberData } from "../interfaces/IDiscordMemberData";
+import type { IDiscordInteraction } from '../interfaces/IDiscordInteraction';
+import type { IDiscordInteractionData } from '../interfaces/IDiscordInteractionData';
+import type { IDiscordMemberData } from '../interfaces/IDiscordMemberData';
 
 export default class DiscordInteraction implements IDiscordInteraction {
   constructor(

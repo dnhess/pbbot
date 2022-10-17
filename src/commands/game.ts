@@ -2,26 +2,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { data, params } from "@serverless/cloud";
+import { data, params } from '@serverless/cloud';
 import {
   InteractionResponseFlags,
   InteractionResponseType,
-} from "discord-interactions";
+} from 'discord-interactions';
 
-import type DiscordInteraction from "../classes/DiscordInteraction";
-import CommandOptionType from "../enums/ICommandOptionType";
-import type { ICommand } from "../interfaces/ICommand";
-import type { IGameData } from "../interfaces/IGame";
-import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter";
+import type DiscordInteraction from '../classes/DiscordInteraction';
+import CommandOptionType from '../enums/ICommandOptionType';
+import type { ICommand } from '../interfaces/ICommand';
+import type { IGameData } from '../interfaces/IGame';
+import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
 
 export const command: ICommand = {
-  name: "game",
-  description: "Get information about a game",
+  name: 'game',
+  description: 'Get information about a game',
   type: CommandOptionType.SUB_COMMAND,
   options: [
     {
-      name: "game",
-      description: "The game to get information about",
+      name: 'game',
+      description: 'The game to get information about',
       type: CommandOptionType.STRING,
       required: true,
       autocomplete: true,
@@ -39,7 +39,7 @@ export const autocomplete = async (
     const results = await data.get(`games:${capitalizeFirstLetter(value)}*`, {
       limit: 20,
     });
-    if ("items" in results) {
+    if ('items' in results) {
       // eslint-disable-next-line no-restricted-syntax
       for (const item of results.items) {
         const game = item.value as IGameData;
@@ -67,7 +67,7 @@ export const interact = async (
   _interactionActionOverwrite?: any
 ): Promise<any> => {
   // Get the game name from the interaction
-  const gameName = interaction.getOptionValue("game") as string;
+  const gameName = interaction.getOptionValue('game') as string;
   // Get the game from the database
   const game = (await data.get(`games:${gameName}`)) as IGameData;
 
@@ -130,16 +130,16 @@ export const interact = async (
           },
           fields: [
             {
-              name: "All Time Rankings",
-              value: top10AllString.join(""),
+              name: 'All Time Rankings',
+              value: top10AllString.join(''),
             },
             {
-              name: "Weekly Rankings",
-              value: top10WeekString.join(""),
+              name: 'Weekly Rankings',
+              value: top10WeekString.join(''),
             },
             {
-              name: "Daily Rankings",
-              value: top10DayString.join(""),
+              name: 'Daily Rankings',
+              value: top10DayString.join(''),
             },
           ],
         },

@@ -1,24 +1,24 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { params } from "@serverless/cloud";
+import { params } from '@serverless/cloud';
 import {
   InteractionResponseFlags,
   InteractionResponseType,
-} from "discord-interactions";
+} from 'discord-interactions';
 
-import type DiscordInteraction from "../classes/DiscordInteraction";
-import CommandOptionType from "../enums/ICommandOptionType";
-import type { ICommand } from "../interfaces/ICommand";
+import type DiscordInteraction from '../classes/DiscordInteraction';
+import CommandOptionType from '../enums/ICommandOptionType';
+import type { ICommand } from '../interfaces/ICommand';
 
 enum LeaderboardType {
-  LAST_24_HOURS = "day",
-  LAST_7_DAYS = "week",
-  ALL_TIME = "all",
+  LAST_24_HOURS = 'day',
+  LAST_7_DAYS = 'week',
+  ALL_TIME = 'all',
 }
 
 enum LeaderboardTypeToFriendlyName {
-  day = "Last 24 Hours",
-  week = "Last 7 Days",
-  all = "All Time",
+  day = 'Last 24 Hours',
+  week = 'Last 7 Days',
+  all = 'All Time',
 }
 
 interface ILeaderboardResponse {
@@ -29,25 +29,25 @@ interface ILeaderboardResponse {
 }
 
 export const command: ICommand = {
-  name: "leaderboard",
-  description: "Get the leaderboard",
+  name: 'leaderboard',
+  description: 'Get the leaderboard',
   options: [
     {
-      name: "type",
-      description: "The type of leaderboard",
+      name: 'type',
+      description: 'The type of leaderboard',
       type: CommandOptionType.STRING,
       required: true,
       choices: [
         {
-          name: "Last 24 Hours",
+          name: 'Last 24 Hours',
           value: LeaderboardType.LAST_24_HOURS,
         },
         {
-          name: "Last 7 Days",
+          name: 'Last 7 Days',
           value: LeaderboardType.LAST_7_DAYS,
         },
         {
-          name: "All Time",
+          name: 'All Time',
           value: LeaderboardType.ALL_TIME,
         },
       ],
@@ -68,7 +68,7 @@ export const interact = async (
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       flags: InteractionResponseFlags.EPHEMERAL,
       data: {
-        content: "Invalid leaderboard type",
+        content: 'Invalid leaderboard type',
       },
     };
   }
@@ -83,7 +83,7 @@ export const interact = async (
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
-        content: "No leaderboard found",
+        content: 'No leaderboard found',
       },
     };
   }
