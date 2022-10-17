@@ -61,7 +61,7 @@ export const interact = async (
   _interactionActionOverwrite?: any
 ): Promise<any> => {
   // Get choice
-  const choice = interaction.data.options[0].value as LeaderboardType;
+  const choice = interaction?.data?.options?.[0]?.value as LeaderboardType;
   // If choice isn't a valid leaderboard type, return error
   if (!Object.values(LeaderboardType).includes(choice)) {
     return {

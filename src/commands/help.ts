@@ -20,7 +20,7 @@ export const interact = async (
   _interactionActionOverwrite?: any
 ): Promise<any> => {
   // Loop through and return all the command names and descriptions
-  const commandsArray = [];
+  const commandsArray: { name: string; value: string | undefined }[] = [];
   commands.forEach((parentCommand) => {
     commandsArray.push({
       name: parentCommand.command.name,

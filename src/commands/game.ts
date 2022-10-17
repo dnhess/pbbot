@@ -60,7 +60,7 @@ export const autocomplete = async (
 };
 
 // Interaction
-// Get the gam
+// Get the game
 
 export const interact = async (
   interaction: DiscordInteraction,
@@ -108,13 +108,16 @@ export const interact = async (
 
   // Map the rankings to a string
   const top10AllString = top10All.map(
-    (r) => `${r.position}. ${r.name} - ${r.points} \n`
+    (r: { position: string; name: string; points: string }) =>
+      `${r.position}. ${r.name} - ${r.points} \n`
   );
   const top10DayString = top10Day.map(
-    (r) => `${r.position}. ${r.name} - ${r.points} \n`
+    (r: { position: string; name: string; points: string }) =>
+      `${r.position}. ${r.name} - ${r.points} \n`
   );
   const top10WeekString = top10Week.map(
-    (r) => `${r.position}. ${r.name} - ${r.points} \n`
+    (r: { position: string; name: string; points: string }) =>
+      `${r.position}. ${r.name} - ${r.points} \n`
   );
 
   // Return the game with the title, descirpiton, image, and rankings

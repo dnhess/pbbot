@@ -21,6 +21,7 @@
     "@serverless/cloud": "^2.10.13",
     "@testing-library/jest-dom": "^5.16.5",
     "@types/jest": "^26.0.24",
+    "@types/luxon": "^3.0.1",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
     "eslint": "^8.24.0",

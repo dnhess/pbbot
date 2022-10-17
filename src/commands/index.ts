@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Command from '../enums/Command';
 import type { ICommandModule } from '../interfaces/ICommandModule';
 import * as auction from './auction';

@@ -78,6 +78,15 @@ export const interact = async (
     (auctionItem) => auctionItem.prizeName === auctionName
   );
 
+  if (!auction) {
+    return {
+      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+      data: {
+        content: `Auction "${auctionName}" not found.`,
+      },
+    };
+  }
+
   // Convert start and end date ISO string to luxon DateTime
   const startDate = DateTime.fromISO(auction.startDate);
   const endDate = DateTime.fromISO(auction.endDate);
