@@ -7,6 +7,7 @@
   "scripts": {
     "start": "cloud",
     "test": "cloud test",
+    "test-local": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint-fix": "eslint --fix .",
     "pretty": "prettier --write .",
@@ -18,7 +19,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
-    "@serverless/cloud": "^2.10.13",
+    "@serverless/cloud": "^2.11.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@types/jest": "^26.0.24",
     "@types/luxon": "^3.0.1",

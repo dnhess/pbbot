@@ -91,17 +91,14 @@ jobs:
         run: npm run check-types
 
   test:
-    name: Test
+    name: Jest Tests
     runs-on: ubuntu-latest
-    env:
-      SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 16
-      - run: npm ci
-      - run: npx @serverless/cloud test
+      - name: Install modules
+        run: npm ci
+      - name: Run Jest
+        run: npm run test-local
 
   deploy:
     if: ${{ github.ref == 'refs/heads/main' }}
