@@ -2,23 +2,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { data, params } from '@serverless/cloud';
-import { InteractionResponseFlags, InteractionResponseType } from 'discord-interactions';
+import { data, params } from "@serverless/cloud";
+import {
+  InteractionResponseFlags,
+  InteractionResponseType,
+} from "discord-interactions";
 
-import type DiscordInteraction from '../classes/DiscordInteraction';
-import CommandOptionType from '../enums/ICommandOptionType';
-import type { ICommand } from '../interfaces/ICommand';
-import type { IGameData } from '../interfaces/IGame';
-import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
+import type DiscordInteraction from "../classes/DiscordInteraction";
+import CommandOptionType from "../enums/ICommandOptionType";
+import type { ICommand } from "../interfaces/ICommand";
+import type { IGameData } from "../interfaces/IGame";
+import { capitalizeFirstLetter } from "../utils/capitalizeFirstLetter";
 
 export const command: ICommand = {
-  name: 'game',
-  description: 'Get information about a game',
+  name: "game",
+  description: "Get information about a game",
   type: CommandOptionType.SUB_COMMAND,
   options: [
     {
-      name: 'game',
-      description: 'The game to get information about',
+      name: "game",
+      description: "The game to get information about",
       type: CommandOptionType.STRING,
       required: true,
       autocomplete: true,
@@ -26,13 +29,17 @@ export const command: ICommand = {
   ],
 };
 
-export const autocomplete = async (interaction: DiscordInteraction): Promise<any> => {
+export const autocomplete = async (
+  interaction: DiscordInteraction
+): Promise<any> => {
   const focused = interaction.getFocusedOption();
   const choices = [];
   if (focused) {
     const { value } = focused;
-    const results = await data.get(`games:${capitalizeFirstLetter(value)}*`, { limit: 20 });
-    if ('items' in results) {
+    const results = await data.get(`games:${capitalizeFirstLetter(value)}*`, {
+      limit: 20,
+    });
+    if ("items" in results) {
       // eslint-disable-next-line no-restricted-syntax
       for (const item of results.items) {
         const game = item.value as IGameData;
@@ -55,11 +62,14 @@ export const autocomplete = async (interaction: DiscordInteraction): Promise<any
 // Interaction
 // Get the gam
 
-export const interact = async (interaction: DiscordInteraction, _interactionActionOverwrite?: any): Promise<any> => {
+export const interact = async (
+  interaction: DiscordInteraction,
+  _interactionActionOverwrite?: any
+): Promise<any> => {
   // Get the game name from the interaction
-  const gameName = interaction.getOptionValue('game') as string;
+  const gameName = interaction.getOptionValue("game") as string;
   // Get the game from the database
-  const game = await data.get(`games:${gameName}`) as IGameData;
+  const game = (await data.get(`games:${gameName}`)) as IGameData;
 
   // If the game doesn't exist, return an error
   if (!game) {
@@ -97,9 +107,15 @@ export const interact = async (interaction: DiscordInteraction, _interactionActi
   const top10Week = weekRankings.slice(0, 10);
 
   // Map the rankings to a string
-  const top10AllString = top10All.map((r) => `${r.position}. ${r.name} - ${r.points} \n`);
-  const top10DayString = top10Day.map((r) => `${r.position}. ${r.name} - ${r.points} \n`);
-  const top10WeekString = top10Week.map((r) => `${r.position}. ${r.name} - ${r.points} \n`);
+  const top10AllString = top10All.map(
+    (r) => `${r.position}. ${r.name} - ${r.points} \n`
+  );
+  const top10DayString = top10Day.map(
+    (r) => `${r.position}. ${r.name} - ${r.points} \n`
+  );
+  const top10WeekString = top10Week.map(
+    (r) => `${r.position}. ${r.name} - ${r.points} \n`
+  );
 
   // Return the game with the title, descirpiton, image, and rankings
   return {
@@ -114,16 +130,16 @@ export const interact = async (interaction: DiscordInteraction, _interactionActi
           },
           fields: [
             {
-              name: 'All Time Rankings',
-              value: top10AllString.join(''),
+              name: "All Time Rankings",
+              value: top10AllString.join(""),
             },
             {
-              name: 'Weekly Rankings',
-              value: top10WeekString.join(''),
+              name: "Weekly Rankings",
+              value: top10WeekString.join(""),
             },
             {
-              name: 'Daily Rankings',
-              value: top10DayString.join(''),
+              name: "Daily Rankings",
+              value: top10DayString.join(""),
             },
           ],
         },

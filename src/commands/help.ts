@@ -1,18 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { InteractionResponseFlags, InteractionResponseType } from 'discord-interactions';
+import {
+  InteractionResponseFlags,
+  InteractionResponseType,
+} from "discord-interactions";
 
-import type DiscordInteraction from '../classes/DiscordInteraction';
-import type { ICommand } from '../interfaces/ICommand';
+import type DiscordInteraction from "../classes/DiscordInteraction";
+import type { ICommand } from "../interfaces/ICommand";
 // eslint-disable-next-line import/no-cycle
-import { commands } from './index';
+import { commands } from "./index";
 
 export const command: ICommand = {
-  name: 'help',
-  description: 'Get help with Playbite commands!',
+  name: "help",
+  description: "Get help with Playbite commands!",
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const interact = async (_interaction: DiscordInteraction, _interactionActionOverwrite?: any): Promise<any> => {
+export const interact = async (
+  _interaction: DiscordInteraction,
+  _interactionActionOverwrite?: any
+): Promise<any> => {
   // Loop through and return all the command names and descriptions
   const commandsArray = [];
   commands.forEach((parentCommand) => {
@@ -27,8 +33,8 @@ export const interact = async (_interaction: DiscordInteraction, _interactionAct
     data: {
       embeds: [
         {
-          title: 'Playbite - Help',
-          description: 'Here is a list of all available commands!',
+          title: "Playbite - Help",
+          description: "Here is a list of all available commands!",
           fields: commandsArray,
         },
       ],

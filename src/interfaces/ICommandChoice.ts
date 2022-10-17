@@ -1,4 +1,4 @@
 export interface ICommandChoice {
-    name: string;
-    value: string;
-  }
+  name: string;
+  value: string;
+}
