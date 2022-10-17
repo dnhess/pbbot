@@ -3,6 +3,6 @@ export const capitalizeFirstLetter = (str?: string): string => {
   if (str) {
     return str[0].toUpperCase() + str.slice(1);
   }
-  // Updated ts file to check lint staged
+
   return '';
 };
