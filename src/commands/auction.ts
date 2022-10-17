@@ -1,11 +1,12 @@
-import { InteractionResponseType } from 'discord-interactions';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { params } from '@serverless/cloud';
+import { InteractionResponseType } from 'discord-interactions';
 import { DateTime } from 'luxon';
-import DiscordInteraction from '../classes/DiscordInteraction';
-import { ICommand } from '../interfaces/ICommand';
+
+import type DiscordInteraction from '../classes/DiscordInteraction';
 import CommandOptionType from '../enums/ICommandOptionType';
 import { convertAuctionsResponseToAuctionData } from '../interfaces/IAuctions';
+import type { ICommand } from '../interfaces/ICommand';
 
 export const command: ICommand = {
   name: 'auction',
@@ -23,7 +24,9 @@ export const command: ICommand = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const autocomplete = async (interaction: DiscordInteraction): Promise<any> => {
+export const autocomplete = async (
+  interaction: DiscordInteraction
+): Promise<any> => {
   const focused = interaction.getFocusedOption();
   const choices = [];
   if (focused) {
@@ -54,7 +57,10 @@ export const autocomplete = async (interaction: DiscordInteraction): Promise<any
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const interact = async (interaction: DiscordInteraction, _interactionActionOverwrite?: any): Promise<any> => {
+export const interact = async (
+  interaction: DiscordInteraction,
+  _interactionActionOverwrite?: any
+): Promise<any> => {
   // Get the auction name from the interaction
   const auctionName = interaction.getOptionValue('name') as string;
 
@@ -68,14 +74,30 @@ export const interact = async (interaction: DiscordInteraction, _interactionActi
   const auctionsJson = await auctions.json();
   const auctionsData = convertAuctionsResponseToAuctionData(auctionsJson);
 
-  const auction = auctionsData.find((auctionItem) => auctionItem.prizeName === auctionName);
+  const auction = auctionsData.find(
+    (auctionItem) => auctionItem.prizeName === auctionName
+  );
+
+  if (!auction) {
+    return {
+      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+      data: {
+        content: `Auction "${auctionName}" not found.`,
+      },
+    };
+  }
 
   // Convert start and end date ISO string to luxon DateTime
   const startDate = DateTime.fromISO(auction.startDate);
   const endDate = DateTime.fromISO(auction.endDate);
 
   // Calcuate how long until the auction ends
-  const timeUntilEnd = endDate.diff(startDate, ['days', 'hours', 'minutes', 'seconds']);
+  const timeUntilEnd = endDate.diff(startDate, [
+    'days',
+    'hours',
+    'minutes',
+    'seconds',
+  ]);
 
   // Return the auctions as a list that only the user can see
   return {

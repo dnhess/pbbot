@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable import/no-extraneous-dependencies */
-import { InteractionResponseType } from 'discord-interactions';
 import { data } from '@serverless/cloud';
-import DiscordInteraction from '../classes/DiscordInteraction';
-import { ICommand } from '../interfaces/ICommand';
+import { InteractionResponseType } from 'discord-interactions';
+
+import type DiscordInteraction from '../classes/DiscordInteraction';
 import CommandOptionType from '../enums/ICommandOptionType';
-import { ICollectiableResponse } from '../interfaces/ICollectibles';
+import type { ICollectiableResponse } from '../interfaces/ICollectibles';
+import type { ICommand } from '../interfaces/ICommand';
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
 
 export const command: ICommand = {
@@ -23,12 +24,17 @@ export const command: ICommand = {
   ],
 };
 
-export const autocomplete = async (interaction: DiscordInteraction): Promise<any> => {
+export const autocomplete = async (
+  interaction: DiscordInteraction
+): Promise<any> => {
   const focused = interaction.getFocusedOption();
   const choices = [];
   if (focused) {
     const { value } = focused;
-    const results = await data.get(`collectibles:${capitalizeFirstLetter(value)}*`, { limit: 20 });
+    const results = await data.get(
+      `collectibles:${capitalizeFirstLetter(value)}*`,
+      { limit: 20 }
+    );
     if ('items' in results) {
       // eslint-disable-next-line no-restricted-syntax
       for (const item of results.items) {
@@ -50,12 +56,17 @@ export const autocomplete = async (interaction: DiscordInteraction): Promise<any
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const interact = async (interaction: DiscordInteraction, _interactionActionOverwrite?: any): Promise<any> => {
+export const interact = async (
+  interaction: DiscordInteraction,
+  _interactionActionOverwrite?: any
+): Promise<any> => {
   // Get the collectible name from the interaction
   const collectibleName = interaction.getOptionValue('name') as string;
 
   // Get the collectible from the database
-  const collectible = await data.get(`collectibles:${collectibleName}`) as ICollectiableResponse;
+  const collectible = (await data.get(
+    `collectibles:${collectibleName}`
+  )) as ICollectiableResponse;
 
   // Return the collectibeles as a list that only the user can see
   return {

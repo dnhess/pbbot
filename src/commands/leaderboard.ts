@@ -1,27 +1,31 @@
-import { InteractionResponseType, InteractionResponseFlags } from 'discord-interactions';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { params } from '@serverless/cloud';
-import DiscordInteraction from '../classes/DiscordInteraction';
+import {
+  InteractionResponseFlags,
+  InteractionResponseType,
+} from 'discord-interactions';
+
+import type DiscordInteraction from '../classes/DiscordInteraction';
 import CommandOptionType from '../enums/ICommandOptionType';
-import { ICommand } from '../interfaces/ICommand';
+import type { ICommand } from '../interfaces/ICommand';
 
 enum LeaderboardType {
-    LAST_24_HOURS = 'day',
-    LAST_7_DAYS = 'week',
-    ALL_TIME = 'all'
+  LAST_24_HOURS = 'day',
+  LAST_7_DAYS = 'week',
+  ALL_TIME = 'all',
 }
 
 enum LeaderboardTypeToFriendlyName {
-    day = 'Last 24 Hours',
-    week = 'Last 7 Days',
-    all = 'All Time'
+  day = 'Last 24 Hours',
+  week = 'Last 7 Days',
+  all = 'All Time',
 }
 
 interface ILeaderboardResponse {
-    position: number;
-    name: string;
-    points: number;
-    imageUrl: string;
+  position: number;
+  name: string;
+  points: number;
+  imageUrl: string;
 }
 
 export const command: ICommand = {
@@ -52,9 +56,12 @@ export const command: ICommand = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const interact = async (interaction: DiscordInteraction, _interactionActionOverwrite?: any): Promise<any> => {
+export const interact = async (
+  interaction: DiscordInteraction,
+  _interactionActionOverwrite?: any
+): Promise<any> => {
   // Get choice
-  const choice = interaction.data.options[0].value as LeaderboardType;
+  const choice = interaction?.data?.options?.[0]?.value as LeaderboardType;
   // If choice isn't a valid leaderboard type, return error
   if (!Object.values(LeaderboardType).includes(choice)) {
     return {
@@ -67,7 +74,9 @@ export const interact = async (interaction: DiscordInteraction, _interactionActi
   }
 
   // Get leaderboard from API
-  const leaderboard = await fetch(`${params.BASE_API_URL}/rankings?type=${choice}`);
+  const leaderboard = await fetch(
+    `${params.BASE_API_URL}/rankings?type=${choice}`
+  );
   const leaderboardJson: ILeaderboardResponse[] = await leaderboard.json();
   // If leaderboard is empty, return error
   if (!leaderboard) {
@@ -89,7 +98,9 @@ export const interact = async (interaction: DiscordInteraction, _interactionActi
           fields: leaderboardJson.map((leaderboardItem) => ({
             // image: leaderboardItem.imageUrl,
             name: `${leaderboardItem.position}. ${leaderboardItem.name}`,
-            value: `${new Intl.NumberFormat().format(leaderboardItem.points)} points`,
+            value: `${new Intl.NumberFormat().format(
+              leaderboardItem.points
+            )} points`,
             inline: true,
           })),
         },
