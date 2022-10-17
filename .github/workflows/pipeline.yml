@@ -80,6 +80,16 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
+  type-check:
+    name: Run eslint scanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install modules
+        run: npm ci
+      - name: Run Type Check
+        run: npm run check-types
+
   test:
     name: Test
     runs-on: ubuntu-latest
@@ -95,7 +105,7 @@ jobs:
 
   deploy:
     if: ${{ github.ref == 'refs/heads/main' }}
-    needs: [eslint, analyze, test]
+    needs: [eslint, analyze, test, type-check]
     name: Deploy
     runs-on: ubuntu-latest
     env:
