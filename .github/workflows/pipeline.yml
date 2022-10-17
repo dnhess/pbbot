@@ -81,7 +81,7 @@ jobs:
         run: npm run lint
 
   type-check:
-    name: Run eslint scanning
+    name: Run type check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
