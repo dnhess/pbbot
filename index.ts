@@ -1,13 +1,14 @@
 /* eslint-disable no-console */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {
-  api, params, schedule, data,
-} from '@serverless/cloud';
+  api, data,
+params, schedule, } from '@serverless/cloud';
 import { REST } from 'discord.js';
-import { InteractionType, verifyKeyMiddleware } from 'discord-interactions';
 import { Routes } from 'discord-api-types/v9';
-import { commands } from './src/commands';
+import { InteractionType, verifyKeyMiddleware } from 'discord-interactions';
+
 import DiscordInteraction from './src/classes/DiscordInteraction';
+import { commands } from './src/commands';
 import { HttpStatusCode } from './src/enums/HttpStatusCodes';
 import { convertCollectiblesResponseToCollectiblesData } from './src/interfaces/ICollectibles';
 import { convertGameResponseToGameData } from './src/interfaces/IGame';

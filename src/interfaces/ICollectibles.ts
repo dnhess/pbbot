@@ -1,8 +1,8 @@
-import eCollectibleCategories from '../enums/eCollectibleCategories';
+import ECollectibleCategories from '../enums/ECollectibleCategories';
 
 export interface ICollectibleCategoryData {
     id: string;
-    name: eCollectibleCategories;
+    name: ECollectibleCategories;
     subtitle: string;
     priority: number;
 }
@@ -15,7 +15,7 @@ export interface ICollectiableResponse {
     'promoImageUrl': string,
     'prizeType': string,
     'purchaseUrl'?: string,
-    'categories'?: eCollectibleCategories[]
+    'categories'?: ECollectibleCategories[]
     'categoryData': ICollectibleCategoryData[],
     'categoryIds': string[],
     'active': boolean,
@@ -44,7 +44,7 @@ export interface ICollectibleData {
 
 // Convert ICollectibleResponse to ICollectibleData where categories contain Collectibles
 export const convertCollectiblesResponseToCollectiblesData = (collectiblesResponse: ICollectiableResponse[]): ICollectibleData[] => collectiblesResponse.filter((collectible) => collectible.categories
-    && (collectible.categories.includes(eCollectibleCategories.Collectibles) || collectible.categories.includes(eCollectibleCategories.CommunityCollectibles)))
+    && (collectible.categories.includes(ECollectibleCategories.Collectibles) || collectible.categories.includes(ECollectibleCategories.CommunityCollectibles)))
   .map((collectible) => ({
     id: collectible.id,
     name: collectible.name,

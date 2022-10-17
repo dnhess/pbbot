@@ -1,9 +1,10 @@
-import { InteractionResponseType, InteractionResponseFlags } from 'discord-interactions';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { params } from '@serverless/cloud';
-import DiscordInteraction from '../classes/DiscordInteraction';
+import { InteractionResponseFlags,InteractionResponseType } from 'discord-interactions';
+
+import type DiscordInteraction from '../classes/DiscordInteraction';
 import CommandOptionType from '../enums/ICommandOptionType';
-import { ICommand } from '../interfaces/ICommand';
+import type { ICommand } from '../interfaces/ICommand';
 
 enum LeaderboardType {
     LAST_24_HOURS = 'day',

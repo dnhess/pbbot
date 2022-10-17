@@ -1,11 +1,12 @@
-import { InteractionResponseType } from 'discord-interactions';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { params } from '@serverless/cloud';
+import { InteractionResponseType } from 'discord-interactions';
 import { DateTime } from 'luxon';
-import DiscordInteraction from '../classes/DiscordInteraction';
-import { ICommand } from '../interfaces/ICommand';
+
+import type DiscordInteraction from '../classes/DiscordInteraction';
 import CommandOptionType from '../enums/ICommandOptionType';
 import { convertAuctionsResponseToAuctionData } from '../interfaces/IAuctions';
+import type { ICommand } from '../interfaces/ICommand';
 
 export const command: ICommand = {
   name: 'auction',

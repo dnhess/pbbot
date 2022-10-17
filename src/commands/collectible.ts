@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable import/no-extraneous-dependencies */
-import { InteractionResponseType } from 'discord-interactions';
 import { data } from '@serverless/cloud';
-import DiscordInteraction from '../classes/DiscordInteraction';
-import { ICommand } from '../interfaces/ICommand';
+import { InteractionResponseType } from 'discord-interactions';
+
+import type DiscordInteraction from '../classes/DiscordInteraction';
 import CommandOptionType from '../enums/ICommandOptionType';
-import { ICollectiableResponse } from '../interfaces/ICollectibles';
+import type { ICollectiableResponse } from '../interfaces/ICollectibles';
+import type { ICommand } from '../interfaces/ICommand';
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
 
 export const command: ICommand = {

@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { InteractionResponseType } from 'discord-interactions';
 import { DateTime } from 'luxon';
-import DiscordInteraction from '../classes/DiscordInteraction';
-import { ICommand } from '../interfaces/ICommand';
+
+import type DiscordInteraction from '../classes/DiscordInteraction';
+import type { ICommand } from '../interfaces/ICommand';
 
 export const command: ICommand = {
   name: 'nextdrop',

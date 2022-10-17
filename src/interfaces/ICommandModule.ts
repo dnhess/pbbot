@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ICommand } from './ICommand';
-import { IDiscordInteraction } from './IDiscordInteraction';
+import type { ICommand } from './ICommand';
+import type { IDiscordInteraction } from './IDiscordInteraction';
 
 export interface ICommandModule {
     command: ICommand;

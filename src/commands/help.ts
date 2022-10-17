@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { InteractionResponseFlags, InteractionResponseType } from 'discord-interactions';
-import DiscordInteraction from '../classes/DiscordInteraction';
-import { ICommand } from '../interfaces/ICommand';
+
+import type DiscordInteraction from '../classes/DiscordInteraction';
+import type { ICommand } from '../interfaces/ICommand';
 // eslint-disable-next-line import/no-cycle
 import { commands } from './index';
 

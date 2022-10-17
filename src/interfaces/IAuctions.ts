@@ -1,4 +1,4 @@
-import { IUser } from './IUser';
+import type { IUser } from './IUser';
 
 interface ICurrentBid {
     id?: string;

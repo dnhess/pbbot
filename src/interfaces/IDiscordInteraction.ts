@@ -1,4 +1,4 @@
-import { IDiscordInteractionData } from './IDiscordInteractionData';
+import type { IDiscordInteractionData } from './IDiscordInteractionData';
 
 export interface IDiscordInteraction {
   id: string;
