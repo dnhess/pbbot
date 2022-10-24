@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { InteractionResponseFlags, InteractionResponseType } from 'discord-interactions';
-import DiscordInteraction from '../classes/DiscordInteraction';
-import { ICommand } from '../interfaces/ICommand';
+import {
+  InteractionResponseFlags,
+  InteractionResponseType,
+} from 'discord-interactions';
+
+import type DiscordInteraction from '../classes/DiscordInteraction';
+import type { ICommand } from '../interfaces/ICommand';
 // eslint-disable-next-line import/no-cycle
 import { commands } from './index';
 
@@ -11,9 +15,12 @@ export const command: ICommand = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const interact = async (_interaction: DiscordInteraction, _interactionActionOverwrite?: any): Promise<any> => {
+export const interact = async (
+  _interaction: DiscordInteraction,
+  _interactionActionOverwrite?: any
+): Promise<any> => {
   // Loop through and return all the command names and descriptions
-  const commandsArray = [];
+  const commandsArray: { name: string; value: string | undefined }[] = [];
   commands.forEach((parentCommand) => {
     commandsArray.push({
       name: parentCommand.command.name,

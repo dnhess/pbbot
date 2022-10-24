@@ -1,14 +1,18 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { InteractionResponseFlags, InteractionResponseType } from 'discord-interactions';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { data, params } from '@serverless/cloud';
-import DiscordInteraction from '../classes/DiscordInteraction';
-import { ICommand } from '../interfaces/ICommand';
+import {
+  InteractionResponseFlags,
+  InteractionResponseType,
+} from 'discord-interactions';
+
+import type DiscordInteraction from '../classes/DiscordInteraction';
 import CommandOptionType from '../enums/ICommandOptionType';
+import type { ICommand } from '../interfaces/ICommand';
+import type { IGameData } from '../interfaces/IGame';
 import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
-import { IGameData } from '../interfaces/IGame';
 
 export const command: ICommand = {
   name: 'game',
@@ -25,12 +29,16 @@ export const command: ICommand = {
   ],
 };
 
-export const autocomplete = async (interaction: DiscordInteraction): Promise<any> => {
+export const autocomplete = async (
+  interaction: DiscordInteraction
+): Promise<any> => {
   const focused = interaction.getFocusedOption();
   const choices = [];
   if (focused) {
     const { value } = focused;
-    const results = await data.get(`games:${capitalizeFirstLetter(value)}*`, { limit: 20 });
+    const results = await data.get(`games:${capitalizeFirstLetter(value)}*`, {
+      limit: 20,
+    });
     if ('items' in results) {
       // eslint-disable-next-line no-restricted-syntax
       for (const item of results.items) {
@@ -52,13 +60,16 @@ export const autocomplete = async (interaction: DiscordInteraction): Promise<any
 };
 
 // Interaction
-// Get the gam
+// Get the game
 
-export const interact = async (interaction: DiscordInteraction, interactionActionOverwrite?: any): Promise<any> => {
+export const interact = async (
+  interaction: DiscordInteraction,
+  _interactionActionOverwrite?: any
+): Promise<any> => {
   // Get the game name from the interaction
   const gameName = interaction.getOptionValue('game') as string;
   // Get the game from the database
-  const game = await data.get(`games:${gameName}`) as IGameData;
+  const game = (await data.get(`games:${gameName}`)) as IGameData;
 
   // If the game doesn't exist, return an error
   if (!game) {
@@ -96,9 +107,18 @@ export const interact = async (interaction: DiscordInteraction, interactionActio
   const top10Week = weekRankings.slice(0, 10);
 
   // Map the rankings to a string
-  const top10AllString = top10All.map((r, i) => `${r.position}. ${r.name} - ${r.points} \n`);
-  const top10DayString = top10Day.map((r, i) => `${r.position}. ${r.name} - ${r.points} \n`);
-  const top10WeekString = top10Week.map((r, i) => `${r.position}. ${r.name} - ${r.points} \n`);
+  const top10AllString = top10All.map(
+    (r: { position: string; name: string; points: string }) =>
+      `${r.position}. ${r.name} - ${r.points} \n`
+  );
+  const top10DayString = top10Day.map(
+    (r: { position: string; name: string; points: string }) =>
+      `${r.position}. ${r.name} - ${r.points} \n`
+  );
+  const top10WeekString = top10Week.map(
+    (r: { position: string; name: string; points: string }) =>
+      `${r.position}. ${r.name} - ${r.points} \n`
+  );
 
   // Return the game with the title, descirpiton, image, and rankings
   return {
