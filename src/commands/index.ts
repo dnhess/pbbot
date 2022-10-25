@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ICommandModule } from '../interfaces/ICommandModule';
 import Command from '../enums/Command';
 import * as ping from './ping';
