@@ -1,20 +1,21 @@
 // @ts-nocheck
-import Command from '../enums/Command';
 import type { ICommandModule } from '../interfaces/ICommandModule';
-import * as auction from './auction';
+import Command from '../enums/Command';
+import * as ping from './ping';
+import * as whoami from './whoami';
+import * as leaderboard from './leaderboard';
+import * as website from './website';
 import * as collectible from './collectible';
-import * as createcollectible from './createcollectible';
 import * as download from './download';
 import * as drops from './drops';
-import * as game from './game';
+import * as nextdrop from './nextdrop';
+import * as auction from './auction';
 // eslint-disable-next-line import/no-cycle
 import * as help from './help';
-import * as leaderboard from './leaderboard';
-import * as nextdrop from './nextdrop';
-import * as ping from './ping';
+import * as game from './game';
+import * as createcollectible from './createcollectible';
 import * as play from './play';
-import * as website from './website';
-import * as whoami from './whoami';
+import * as user from './user';
 
 // eslint-disable-next-line import/prefer-default-export
 export const commands: Map<Command, ICommandModule> = new Map([
@@ -31,4 +32,5 @@ export const commands: Map<Command, ICommandModule> = new Map([
   [Command.GAME, game],
   [Command.CREATECOLLECTIBLE, createcollectible],
   [Command.PLAY, play],
+  [Command.USER, user],
 ]);
