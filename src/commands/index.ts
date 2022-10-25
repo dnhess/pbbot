@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { ICommandModule } from '../interfaces/ICommandModule';
+import type { ICommandModule } from '../interfaces/ICommandModule';
 import Command from '../enums/Command';
 import * as ping from './ping';
 import * as whoami from './whoami';
