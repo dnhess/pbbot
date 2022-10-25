@@ -13,5 +13,6 @@ enum Command {
   GAME = 'game',
   CREATECOLLECTIBLE = 'createcollectible',
   PLAY = 'play',
+  USER = 'user',
 }
 export default Command;

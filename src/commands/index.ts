@@ -13,6 +13,7 @@ import * as leaderboard from './leaderboard';
 import * as nextdrop from './nextdrop';
 import * as ping from './ping';
 import * as play from './play';
+import * as user from './user';
 import * as website from './website';
 import * as whoami from './whoami';
 
@@ -31,4 +32,5 @@ export const commands: Map<Command, ICommandModule> = new Map([
   [Command.GAME, game],
   [Command.CREATECOLLECTIBLE, createcollectible],
   [Command.PLAY, play],
+  [Command.USER, user],
 ]);
