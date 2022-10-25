@@ -1,6 +1,7 @@
-import { InteractionResponseType } from 'discord-interactions';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { params } from '@serverless/cloud';
+import { InteractionResponseType } from 'discord-interactions';
+
 import type DiscordInteraction from '../classes/DiscordInteraction';
 import CommandOptionType from '../enums/ICommandOptionType';
 import type { ICommand } from '../interfaces/ICommand';
