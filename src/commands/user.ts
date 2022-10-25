@@ -7,7 +7,8 @@ import type { ICommand } from '../interfaces/ICommand';
 
 export const command: ICommand = {
   name: 'user',
-  description: 'Get info and stats for a Playbite user. Contributed by TotallyNotSeth',
+  description:
+    'Get info and stats for a Playbite user. Contributed by TotallyNotSeth',
   options: [
     {
       name: 'username',
@@ -48,10 +49,11 @@ export const interact = async (
           {
             title: userJson?.displayName,
             description: userJson?.bio,
-            fields: userJson?.stats.map((statItem) => ({
+            fields: userJson?.stats.map((statItem: any) => ({
               name: `${statItem.icon} ${statItem.description}`.replace(
-                "undefined ",
-                ""),
+                'undefined ',
+                ''
+                ),
               value: statItem.value.toLocaleString(),
               inline: true,
             })),
