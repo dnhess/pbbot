@@ -7,7 +7,7 @@ import { ICommand } from '../interfaces/ICommand';
 
 export const command: ICommand = {
   name: 'user',
-  description: 'Get info and stats for a Playbite user (caps-sensitive). Contributed by TotallyNotSeth',
+  description: 'Get info and stats for a Playbite user. Contributed by TotallyNotSeth',
   options: [
     {
       name: 'username',
