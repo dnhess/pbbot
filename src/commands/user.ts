@@ -32,13 +32,13 @@ interface IUserStatsResponse {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const interact = async (
   interaction: DiscordInteraction,
-  _interactionActionOverwrite?: any
-  ): Promise<any> => {
+  _interactionActionOverwrite?: any,
+): Promise<any> => {
   const username = interaction.getOptionValue('username') as string;
 
   // Get leaderboard from API
   const userStats = await fetch(
-    `${params.BASE_API_URL}/users/${username}/stats`
+    `${params.BASE_API_URL}/users/${username}/stats`,
   );
   try {
     const userJson: IUserStatsResponse = await userStats.json();
@@ -52,8 +52,8 @@ export const interact = async (
             fields: userJson?.stats.map((statItem: any) => ({
               name: `${statItem.icon} ${statItem.description}`.replace(
                 'undefined ',
-                ''
-                ),
+                '',
+              ),
               value: statItem.value.toLocaleString(),
               inline: true,
             })),
@@ -64,7 +64,7 @@ export const interact = async (
         ],
       },
     };
-  } catch(SyntaxError) {
+  } catch (SyntaxError) {
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
