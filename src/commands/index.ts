@@ -9,7 +9,6 @@ import * as drops from './drops';
 import * as game from './game';
 // eslint-disable-next-line import/no-cycle
 import * as help from './help';
-import * as leaderboard from './leaderboard';
 import * as nextdrop from './nextdrop';
 import * as ping from './ping';
 import * as play from './play';
@@ -21,7 +20,6 @@ import * as whoami from './whoami';
 export const commands: Map<Command, ICommandModule> = new Map([
   [Command.PING, ping],
   [Command.WHOAMI, whoami],
-  [Command.LEADERBOARD, leaderboard],
   [Command.WEBSITE, website],
   [Command.COLLECTIBLE, collectible],
   [Command.DOWNLOAD, download],
