@@ -2,7 +2,6 @@
 enum Command {
   PING = 'ping',
   WHOAMI = 'whoami',
-  LEADERBOARD = 'leaderboard',
   WEBSITE = 'website',
   COLLECTIBLE = 'collectible',
   DOWNLOAD = 'download',
