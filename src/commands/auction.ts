@@ -30,12 +30,16 @@ export const autocomplete = async (
   const focused = interaction.getFocusedOption();
   const choices = [];
   if (focused) {
-    const auctions = await fetch(`${params.BASE_API_URL}/auctions`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const auctions = await fetch(
+      `${params.BASE_API_URL}/auctions?plat=web-android`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
     const auctionsJson = await auctions.json();
     const auctionsData = convertAuctionsResponseToAuctionData(auctionsJson);
 
