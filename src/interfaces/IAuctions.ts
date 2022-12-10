@@ -30,6 +30,7 @@ export interface IAuctionsResponse {
 }
 
 export interface IAuctionData {
+  status: number;
   startDate: string;
   endDate: string;
   bidderCount: number;
@@ -38,6 +39,7 @@ export interface IAuctionData {
   prizeDescription: string;
   currentBidder: string;
   currentBidAmount: number;
+  auctionId: string;
 }
 
 // Convert IAuctionsResponse to IAuctionData
@@ -45,6 +47,7 @@ export const convertAuctionsResponseToAuctionData = (
   auctionsResponse: IAuctionsResponse[]
 ): IAuctionData[] =>
   auctionsResponse.map((auction) => ({
+    status: auction.status,
     startDate: auction.startDate,
     endDate: auction.endDate,
     bidderCount: auction.bidderCount,
@@ -53,4 +56,5 @@ export const convertAuctionsResponseToAuctionData = (
     prizeDescription: auction.prize.description,
     currentBidder: auction.currentBid?.user?.displayName || 'No bids yet',
     currentBidAmount: auction.currentBid?.amount,
+    auctionId: auction.prize.id,
   }));

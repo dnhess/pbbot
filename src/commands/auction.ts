@@ -43,11 +43,16 @@ export const autocomplete = async (
     const auctionsJson = await auctions.json();
     const auctionsData = convertAuctionsResponseToAuctionData(auctionsJson);
 
+    // Filter autocomplete where status is not 2
+    const filteredAuctions = auctionsData.filter(
+      (auction) => auction.status === 0
+    );
+
     // eslint-disable-next-line no-restricted-syntax
-    for (const auction of auctionsData) {
+    for (const auction of filteredAuctions) {
       choices.push({
         name: auction.prizeName,
-        value: auction.prizeName,
+        value: auction.auctionId,
       });
     }
   }
@@ -66,33 +71,36 @@ export const interact = async (
   _interactionActionOverwrite?: any
 ): Promise<any> => {
   // Get the auction name from the interaction
-  const auctionName = interaction.getOptionValue('name') as string;
+  const auctionId = interaction.getOptionValue('name') as string;
 
   // Get the auction from the database
-  const auctions = await fetch(`${params.BASE_API_URL}/auctions`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const auctions = await fetch(
+    `${params.BASE_API_URL}/auctions?plat=web-android`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
   const auctionsJson = await auctions.json();
+
   const auctionsData = convertAuctionsResponseToAuctionData(auctionsJson);
 
   const auction = auctionsData.find(
-    (auctionItem) => auctionItem.prizeName === auctionName
+    (auctionItem) => auctionItem.auctionId === auctionId
   );
 
   if (!auction) {
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
-        content: `Auction "${auctionName}" not found.`,
+        content: `Auction not found.`,
       },
     };
   }
 
-  // Convert start and end date ISO string to luxon DateTime
-  const startDate = DateTime.fromISO(auction.startDate);
+  const startDate = DateTime.local();
   const endDate = DateTime.fromISO(auction.endDate);
 
   // Calcuate how long until the auction ends
