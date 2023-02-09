@@ -1,3 +1,8 @@
+# Archived
+This project has been archived in favor of Playbot v2, which can be found [here](https://github.com/dnhess/playbot).
+
+
+
 # Serverless Cloud TypeScript API
 
 This is a scaffolding project for building a TypeScript API on Serverless Cloud! Type `cloud` to enter the cloud shell and connect to your personal development instance. Just play with the code and watch changes sync and deploy in less than a second.
